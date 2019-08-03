@@ -1,0 +1,9 @@
+#  ----- server.R -----
+library(shiny)
+
+shinyServer(function(input, output) {
+  getPage<-function() {
+    return(includeHTML("include.html"))
+  }
+  output$inc<-renderUI({getPage()})
+})

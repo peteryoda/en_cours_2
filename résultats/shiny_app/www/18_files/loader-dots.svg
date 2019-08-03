@@ -1,0 +1,28 @@
+<svg width="19px" height="7px" viewBox="0 0 19 7" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <style>
+    .dot {
+      fill-opacity: 0;
+      fill: #0970E6;
+      animation: animateDot 1.2s ease-in-out infinite;
+    }
+    .one {
+      animation-delay: 0s;
+    }
+    .two {
+      animation-delay: 0.3s;
+    }
+    .three {
+      animation-delay: 0.6s;
+    }
+    @keyframes animateDot {
+      0% { fill-opacity: 0; }
+      33% { fill-opacity: 1; }
+      66% { fill-opacity: 0; }
+      100% { fill-opacity: 0; }
+    }
+  </style>
+
+  <circle class="dot one" cx="2.5" cy="3.42" r="2"></circle>
+  <circle class="dot two" cx="8.75" cy="3.42" r="2.5"></circle>
+  <circle class="dot three" cx="16" cy="3.42" r="3"></circle>
+</svg>

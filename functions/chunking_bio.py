@@ -48,6 +48,11 @@ import datetime
 import argparse
 import os
 
+# 17/05/2019: correction suite à l'exécution de Hervé
+# On a besoin de "punkt"
+import nltk
+nltk.download('punkt')
+
 
 # Toutes les fonctions utiles
 from functions import fun_step_1_create_df as step_1
@@ -130,7 +135,13 @@ def matching_products_with_threshold(url_product, threshold, method):
 
     # 06/05/2019: on n'utilise plus le paramètre "path_input"
     # if (path_input != None and method == "all_except_one") or (path_input != None and method == "all") or (path_input != None and method == "all_with_filter"):
-    if method == "all_except_one" or method == "all" or method == "all_with_filter":
+
+    # 20/05/2019 : le cas "all_except_one", ne sert plus à rien
+    # if method == "all_except_one" or method == "all" or method == "all_with_filter":
+
+    # 28/05/2019: on n'a plus besoin de "all_with_filter"
+    # if method == "all" or method == "all_with_filter":
+    if method == "all":
 
         print ("Step 1-1: Import des fichiers .csv product")
 
@@ -154,12 +165,21 @@ def matching_products_with_threshold(url_product, threshold, method):
         # On rassemble tous les produits bio dans un dataframe
         # frames = [orgc_crf_product, orgc_gwz_product, orgc_ntr_product, orgc_wbe_product]
         # orgc_descriptions = pd.concat(frames)
-        orgc_descriptions = step_1.create_df("product_all_except_5_slugs", data_folder_input + "/all/", "utf8")
+        print(data_folder_input + "/all/")
+
+        # 10/05/2019 : on normalise les noms des fichiers en entrée
+        # orgc_descriptions = step_1.create_df("orgc_all_except_5_slugs_product", data_folder_input + "/all/", "utf8")
+        orgc_descriptions = step_1.create_df("orgc_all_slugs_product", data_folder_input + "/all/", "utf8")
+
+        # 09/05/2019 : ajout de la colonne "distributeur"
+        orgc_descriptions['distributeur'] = orgc_descriptions['xweb']
 
         # 10/04/2019 : on prend tous les produits excepté un
         # 26/04/2019 : ajout de cette condition
-        if path_input != None and method == "all_except_one":
-            orgc_descriptions = orgc_descriptions[orgc_descriptions['xurl'] != url_product]
+
+        # 20/05/2019 : le cas "all_except_one", ne sert plus à rien
+        # if path_input != None and method == "all_except_one":
+        #     orgc_descriptions = orgc_descriptions[orgc_descriptions['xurl'] != url_product]
 
         # del frames
         # del orgc_crf_product, orgc_gwz_product, orgc_ntr_product, orgc_wbe_product
@@ -178,17 +198,22 @@ def matching_products_with_threshold(url_product, threshold, method):
         # orgc_wbe_offer = step_1.create_df("orgc_wbe_offer",data_folder_input + "/wbe/","utf8")
         # orgc_wbe_offer['distributeur'] = 'wbe'
 
-
         # On rassemble tous les produits bio dans un dataframe
         # frames = [orgc_crf_offer, orgc_gwz_offer, orgc_ntr_offer, orgc_wbe_offer]
         # orgc_offers = pd.concat(frames)
-        orgc_offers = step_1.create_df("offer_all_except_5_slugs", data_folder_input + "/all/", "utf8")
+        # 10/05/2019 : on normalise les noms des fichiers en entrée
+        # orgc_offers = step_1.create_df("orgc_all_except_5_slugs_offer", data_folder_input + "/all/", "utf8")
+        orgc_offers = step_1.create_df("orgc_all_slugs_offer", data_folder_input + "/all/", "utf8")
 
+        # 09/05/2019 : ajout de la colonne "distributeur"
+        orgc_offers['distributeur'] = orgc_offers['xweb']
 
         # 10/04/2019 : on prend tous les produits excepté un
         # 26/04/2019 : ajout de cette condition
-        if path_input != None and method == "all_except_one":
-            orgc_offers = orgc_offers[orgc_offers['xurl'] != url_product]
+
+        # 20/05/2019 : le cas "all_except_one", ne sert plus à rien
+        # if path_input != None and method == "all_except_one":
+        #     orgc_offers = orgc_offers[orgc_offers['xurl'] != url_product]
 
         # del frames
         # del orgc_crf_offer, orgc_gwz_offer, orgc_ntr_offer, orgc_wbe_offer
@@ -197,8 +222,6 @@ def matching_products_with_threshold(url_product, threshold, method):
     # 06/05/2019: on n'utilise plus le paramètre "path_input"
     # elif path_input != None and method == "new_one":
     elif method == "new_one":
-
-        # print("On va utiliser le dictionnaire :", dict_one_product)
 
         # 06/05/2019: pour un vrai fonctionnement en Prod, on n'a plus besoin
         # de créer un dataframe "orgc_descriptions_all_slugs"
@@ -239,7 +262,13 @@ def matching_products_with_threshold(url_product, threshold, method):
         # l'un après l'autre donc on teste une seule fois avec 5 nouveaux produits
 
         # orgc_descriptions_all_slugs_except_one = orgc_descriptions_all_slugs[orgc_descriptions_all_slugs['xurl'] != url_product]
-        orgc_descriptions_all_slugs_except_one = step_1.create_df("product_all_except_5_slugs", data_folder_input + "/all/", "utf8")
+        # 10/05/2019 : on normalise les noms des fichiers en entrée
+        # orgc_descriptions_all_slugs_except_one = step_1.create_df("orgc_all_except_5_slugs_product", data_folder_input + "/all/", "utf8")
+        orgc_descriptions_all_slugs_except_one = step_1.create_df("orgc_all_slugs_product", data_folder_input + "/all/",
+                                                                  "utf8")
+
+        # 09/05/2019 : ajout de la colonne "distributeur"
+        orgc_descriptions_all_slugs_except_one['distributeur'] = orgc_descriptions_all_slugs_except_one['xweb']
 
         # del frames
         # del orgc_crf_product, orgc_gwz_product, orgc_ntr_product, orgc_wbe_product
@@ -268,7 +297,12 @@ def matching_products_with_threshold(url_product, threshold, method):
         # l'un après l'autre donc on teste une seule fois avec 5 nouveaux produits
 
         # orgc_offers_all_slugs_except_one = orgc_offers_all_slugs[orgc_offers_all_slugs['xurl'] != url_product]
-        orgc_offers_all_slugs_except_one = step_1.create_df("offer_all_except_5_slugs", data_folder_input + "/all/", "utf8")
+        # 10/05/2019 : on normalise les noms des fichiers en entrée
+        # orgc_offers_all_slugs_except_one = step_1.create_df("orgc_all_except_5_slugs_offer", data_folder_input + "/all/", "utf8")
+        orgc_offers_all_slugs_except_one = step_1.create_df("orgc_all_slugs_offer", data_folder_input + "/all/", "utf8")
+
+        # 09/05/2019 : ajout de la colonne "distributeur"
+        orgc_offers_all_slugs_except_one['distributeur'] = orgc_offers_all_slugs_except_one['xweb']
 
         # ATTENTION :
         #  "orgc_offers_all_slugs" devient "orgc_offers_all_slugs_except_one"
@@ -329,17 +363,16 @@ def matching_products_with_threshold(url_product, threshold, method):
     # if path_input != None and method == "new_one":
     if method == "new_one":
 
-        # title_and_description = {'row': [list(dict_one_product.keys())[0][0], list(dict_one_product.keys())[0][1],
-        #                                  list(dict_one_product.values())[0][0], list(dict_one_product.values())[0][1],
-        #                                  list(dict_one_product.values())[0][2], list(dict_one_product.values())[0][3],
-        #                                  list(dict_one_product.values())[0][4], list(dict_one_product.values())[0][5]]}
-        # orgc_descriptions = pd.DataFrame.from_dict(title_and_description, orient='index', columns=['xslug', 'distributeur', 'xtitle', 'xbrand', 'xdescription','xbreadcrumb', 'xprice', 'xurl'])
-
         # 06/05/2019 : pour se rapprocher du vrai fonctionnement en Prod
         # on pointe sur les données du répertoire "new_one"
 
         # orgc_descriptions = orgc_descriptions_all_slugs[orgc_descriptions_all_slugs['xurl'] == url_product]
-        orgc_descriptions =  step_1.create_df("sampled_product_5_slugs", data_folder_input + "/new_one/", "utf8")
+        # 10/05/2019 : on normalise les noms des fichiers en entrée
+        # orgc_descriptions = step_1.create_df("orgc_sampled_3_slugs_product", data_folder_input + "/new_one/", "utf8")
+        orgc_descriptions = step_1.create_df("orgc_new_one_slugs_product", data_folder_input + "/new_one/", "utf8")
+
+        # 09/05/2019 : ajout de la colonne "distributeur"
+        orgc_descriptions['distributeur'] = orgc_descriptions['xweb']
 
     orgc_descriptions["title_new"] = orgc_descriptions['xtitle'].map(step_2.cleansing_titles)
 
@@ -375,8 +408,14 @@ def matching_products_with_threshold(url_product, threshold, method):
     # if (path_input != None and method == "all_except_one") or (path_input != None and method == "all"):
     # 06/05/2019: on n'utilise plus le paramètre "path_input"
     # if (path_input != None and method == "all_except_one") or (path_input != None and method == "all") or (path_input != None and method == "all_with_filter"):
-    if method == "all_except_one" or method == "all" or method == "all_with_filter":
 
+    # 20/05/2019 : le cas "all_except_one", ne sert plus à rien
+    # if method == "all_except_one" or method == "all" or method == "all_with_filter":
+
+    # 28/05/2019 : on n'a pas besoin de "all_with_filter" car on peut maintenant utiliser "all" à la place
+    # if method == "all" or method == "all_with_filter":
+    # if method == "all" or method == "all_with_filter":
+    if method == "all":
         orgc_descriptions = pd.merge(orgc_descriptions, orgc_offers[['xslug', 'xprice']], on="xslug", how="inner")
 
     # ---------------------------------------------------------------------------------------------------------------------------#
@@ -884,7 +923,13 @@ def matching_products_with_threshold(url_product, threshold, method):
     # if (path_input != None and method == "all_except_one") or (path_input != None and method == "all"):
     # 06/05/2019: on n'utilise plus le paramètre "path_input"
     # if (path_input != None and method == "all_except_one") or (path_input != None and method == "all") or (path_input != None and method == "all_with_filter"):
-    if method == "all_except_one" or method == "all" or method == "all_with_filter":
+
+    # 20/05/2019 : le cas "all_except_one", ne sert plus à rien
+    # if method == "all_except_one" or method == "all" or method == "all_with_filter":
+
+    # 28/05/2019 : on n'a pas besoin de "all_with_filter" car on peut maintenant utiliser "all" à la place
+    # if method == "all" or method == "all_with_filter":
+    if method == "all":
 
         df_chunks_in_descriptions = pd.DataFrame(dedup_X_phrases_descriptions_to_use, columns=['chunk'])
         df_chunks_in_descriptions.to_pickle(path_root + path_output + "/to_update_pkl/df_chunks_in_descriptions.pkl")
@@ -901,6 +946,11 @@ def matching_products_with_threshold(url_product, threshold, method):
         del dedup_X_phrases_descriptions_to_use
         chunks_temp = list(df_chunks_in_descriptions['chunk']) + list(df_chunks_in_description_new_product['chunk'])
         dedup_X_phrases_descriptions_to_use = list(set(chunks_temp))
+
+        # 07/05/2019 : ajout de la sauvegarde de tous les chunks
+        # présents dans toutes les descriptions après chaque exéxution en mode "DELTA"
+        df_chunks_in_descriptions = pd.DataFrame(dedup_X_phrases_descriptions_to_use, columns=['chunk'])
+        df_chunks_in_descriptions.to_pickle(path_root + path_output + "/to_update_pkl/df_chunks_in_descriptions.pkl")
 
     # --------------------------------------------------------------------------------------------------------------------#
     # --  On récupère toutes les entités présentes dans toutes les descriptions des produits -----------------------------#
@@ -925,8 +975,13 @@ def matching_products_with_threshold(url_product, threshold, method):
 
     # 06/05/2019: on n'utilise plus le paramètre "path_input"
     # if (path_input != None and method == "all_except_one") or (path_input != None and method == "all") or (path_input != None and method == "all_with_filter"):
-    if method == "all_except_one" or method == "all" or method == "all_with_filter":
 
+    # 20/05/2019 : le cas "all_except_one", ne sert plus à rien
+    # if method == "all_except_one" or method == "all" or method == "all_with_filter":
+
+    #  28/05/2019 : on n'a pas besoin de "all_with_filter" car on peut maintenant utiliser "all" à la place
+    # if method == "all" or method == "all_with_filter":
+    if method == "all":
         print("On fait le cas 1")
 
         array_X_phrases_descriptions = np.array(dedup_X_phrases_descriptions_to_use, dtype=list)
@@ -992,25 +1047,28 @@ def matching_products_with_threshold(url_product, threshold, method):
             if each not in liste_X_phrases_found_in_4_grams_descriptions and each != '':
                 liste_X_phrases_found_in_4_grams_descriptions.append(each)
 
-        df_liste_X_phrases_found_in_1_grams = pd.DataFrame(liste_X_phrases_found_in_1_grams_descriptions,
-                                                           columns=['un_grams_chunk'])
-        df_liste_X_phrases_found_in_1_grams.to_pickle(
-            path_root + path_output + "/to_update_pkl/df_liste_X_phrases_found_in_1_grams.pkl")
 
-        df_liste_X_phrases_found_in_2_grams = pd.DataFrame(liste_X_phrases_found_in_2_grams_descriptions,
-                                                           columns=['deux_grams_chunk'])
-        df_liste_X_phrases_found_in_2_grams.to_pickle(
-            path_root + path_output + "/to_update_pkl/df_liste_X_phrases_found_in_2_grams.pkl")
-
-        df_liste_X_phrases_found_in_3_grams = pd.DataFrame(liste_X_phrases_found_in_3_grams_descriptions,
-                                                           columns=['trois_grams_chunk'])
-        df_liste_X_phrases_found_in_3_grams.to_pickle(
-            path_root + path_output + "/to_update_pkl/df_liste_X_phrases_found_in_3_grams.pkl")
-
-        df_liste_X_phrases_found_in_4_grams = pd.DataFrame(liste_X_phrases_found_in_4_grams_descriptions,
-                                                           columns=['quatre_grams_chunk'])
-        df_liste_X_phrases_found_in_4_grams.to_pickle(
-            path_root + path_output + "/to_update_pkl/df_liste_X_phrases_found_in_4_grams.pkl")
+        # 10/05/2019 : ces sauvegardes sont inutiles
+        # On les met en commentaires
+        # df_liste_X_phrases_found_in_1_grams = pd.DataFrame(liste_X_phrases_found_in_1_grams_descriptions,
+        #                                                    columns=['un_grams_chunk'])
+        # df_liste_X_phrases_found_in_1_grams.to_pickle(
+        #     path_root + path_output + "/to_update_pkl/df_liste_X_phrases_found_in_1_grams.pkl")
+        #
+        # df_liste_X_phrases_found_in_2_grams = pd.DataFrame(liste_X_phrases_found_in_2_grams_descriptions,
+        #                                                    columns=['deux_grams_chunk'])
+        # df_liste_X_phrases_found_in_2_grams.to_pickle(
+        #     path_root + path_output + "/to_update_pkl/df_liste_X_phrases_found_in_2_grams.pkl")
+        #
+        # df_liste_X_phrases_found_in_3_grams = pd.DataFrame(liste_X_phrases_found_in_3_grams_descriptions,
+        #                                                    columns=['trois_grams_chunk'])
+        # df_liste_X_phrases_found_in_3_grams.to_pickle(
+        #     path_root + path_output + "/to_update_pkl/df_liste_X_phrases_found_in_3_grams.pkl")
+        #
+        # df_liste_X_phrases_found_in_4_grams = pd.DataFrame(liste_X_phrases_found_in_4_grams_descriptions,
+        #                                                    columns=['quatre_grams_chunk'])
+        # df_liste_X_phrases_found_in_4_grams.to_pickle(
+        #     path_root + path_output + "/to_update_pkl/df_liste_X_phrases_found_in_4_grams.pkl")
 
     # Cas 2
     # elif path_input != None and dict_product != None:
@@ -1104,8 +1162,13 @@ def matching_products_with_threshold(url_product, threshold, method):
 
     # 06/05/2019: on n'utilise plus le paramètre "path_input"
     # if (path_input != None and method == "all_except_one") or (path_input != None and method == "all") or (path_input != None and method == "all_with_filter"):
-    if method == "all_except_one" or method == "all" or method == "all_with_filter":
 
+    # 20/05/2019 : le cas "all_except_one", ne sert plus à rien
+    # if method == "all_except_one" or method == "all" or method == "all_with_filter":
+
+    #  28/05/2019 : on n'a pas besoin de "all_with_filter" car on peut maintenant utiliser "all" à la place
+    # if method == "all" or method == "all_with_filter":
+    if method == "all":
         df_to_use_next_step = title_et_ngrams
 
     # Cas 2 : "liste_X_phrases_found_in_1_grams_descriptions" devient la réunion de :
@@ -1278,6 +1341,8 @@ def matching_products_with_threshold(url_product, threshold, method):
     # all_results = merged_results[['id','slug','entity_X_phrases_1_grams_found', 'entity_X_phrases_2_grams_found','entity_X_phrases_3_grams_found','entity_X_phrases_4_grams_found']]
     all_results = merged_results.fillna("NA")
 
+    # print("all_results avant Step 5", all_results.shape)
+
     #--------------------------------------------------------------------------------------------------------------------#
     #------------------------------------- step_5_ngrams_overlapped_and_not_overlapped ----------------------------------#
     #--------------------------------------------------------------------------------------------------------------------#
@@ -1355,6 +1420,10 @@ def matching_products_with_threshold(url_product, threshold, method):
     # if path_input != None and method == "new_one":
     if method == "new_one":
         # orgc_descriptions = pd.concat([orgc_descriptions, orgc_descriptions_all_slugs[list(orgc_descriptions)]])
+
+        # 09/05/2019: on a besoin de "orgc_descriptions"
+        # qui contient seulement les nouveaux produits
+        orgc_descriptions_new_products = orgc_descriptions
         orgc_descriptions = pd.concat([orgc_descriptions, orgc_descriptions_all_slugs_except_one[list(orgc_descriptions_all_slugs_except_one)]])
 
     df_orgc_descriptions_temp = orgc_descriptions[['xslug', 'xtitle', 'xbrand', 'breadcrumb', 'xprice', 'title_splitted_uppercase', 'title_splitted_guillemets']]
@@ -1367,6 +1436,8 @@ def matching_products_with_threshold(url_product, threshold, method):
     all_results.rename(columns={'xbrand_temp': 'brand'}, inplace=True)
 
     print ("Step 7: Extraction dans les titres des entités en majuscules")
+
+    # print("all_results au début de Step 7:", all_results.shape)
 
     # On met en minuscules la colonne ''title_splitted_uppercase'
     all_results["title_temp"] = all_results['title_splitted_uppercase'].map(step_7.strip_and_lower_title_splitted_uppercase)
@@ -2131,6 +2202,12 @@ def matching_products_with_threshold(url_product, threshold, method):
     # ce qui conduit à une erreur
     # all_results = pd.concat([df_results_by_one_entity, df_results_by_two_entity,df_results_by_three_entity,df_results_by_four_entity,df_results_by_five_entity])
 
+    # print ("df_results_by_one_entity:", df_results_by_one_entity.shape)
+    # print("df_results_by_one_entity:", df_results_by_two_entity.shape)
+    # print("df_results_by_one_entity:", df_results_by_three_entity.shape)
+    # print("df_results_by_one_entity:", df_results_by_four_entity.shape)
+    # print("df_results_by_one_entity:", df_results_by_five_entity.shape)
+
     try:
         all_results = df_results_by_one_entity
         try:
@@ -2198,13 +2275,22 @@ def matching_products_with_threshold(url_product, threshold, method):
     print ("all_results avant idx_of_url:", all_results.shape)
 
     # if path_input != None and dict_product != None:
-    if path_input != None and method == "new_one":
+    # 06/05/2019: on n'utilise plus le paramètre "path_input"
+    # if path_input != None and method == "new_one":
+    if method == "new_one":
         # all_results = all_results[(all_results['slug_one'] == list(dict_one_product.keys())[0][0]) | (all_results['slug_two'] == list(dict_one_product.keys())[0][0])]
-        idx_of_url = orgc_descriptions[orgc_descriptions['xurl'] == url_product].index.values.astype(int)[0]
-        slug_of_url = orgc_descriptions[orgc_descriptions['xurl'] == url_product].loc[idx_of_url, 'xslug']
-        all_results = all_results[(all_results['slug_one'] == slug_of_url) | (all_results['slug_two'] == slug_of_url)]
+        # 09/05/2019: on doit filtrer grace aux URLS
+        # présents dans "orgc_descriptions"
 
-        del idx_of_url, slug_of_url
+        # Extraction grace aux URLS distincts dans "orgc_descriptions"
+        # idx_of_url = orgc_descriptions[orgc_descriptions['xurl'] == url_product].index.values.astype(int)[0]
+        # slug_of_url = orgc_descriptions[orgc_descriptions['xurl'] == url_product].loc[idx_of_url, 'xslug']
+        # all_results = all_results[(all_results['slug_one'] == slug_of_url) | (all_results['slug_two'] == slug_of_url)]
+
+        all_results = all_results[(all_results['slug_one'].isin(list(orgc_descriptions_new_products['xslug']))) | (all_results['slug_two'].isin(list(orgc_descriptions_new_products['xslug'])))]
+
+        # 09/05/2019: on doit filtrer grace aux URLS
+        # del idx_of_url, slug_of_url
 
     #--------------------------------------------------------------------------------------------------------------------------------------------------#
     #-- Calcul du "confidence_score" pour chaque produit ----------------------------------------------------------------------------------------------#
@@ -2216,10 +2302,12 @@ def matching_products_with_threshold(url_product, threshold, method):
 
     # 10/04/2019: on filtre les couples dont la similarité s est supérieure ou égale à s
     # if s != None:
-
     # 26/04/2019: ajout du cas "all_with_filter"
     # if threshold != None:
-    if threshold != None and method != "all_with_filter":
+
+    #  28/05/2019 : on n'a pas besoin de "all_with_filter" car on peut maintenant utiliser "all" à la place
+    # if threshold != None and method != "all_with_filter":
+    if threshold != None and (method == "all" or method == "new_one"):
 
         # print ("type de threshold: ",type(threshold))
         all_results = all_results[all_results['confidence_score'] >= threshold]
@@ -2298,6 +2386,7 @@ def matching_products_with_threshold(url_product, threshold, method):
     # 'URL_two',
     # 'confidence_score']], on = ['slug_one','slug_two','confidence_score'], how = "inner")
 
+    # df_resultat_final = df_resultat_final.sort_values(['confidence_score'], ascending = False)
     # --------------------------------------------------------------------------------------------------------------------------------------------------#
     # -- On transforme maintenant suivant: -------------------------------------------------------------------------------------------------------------#
     # -- crf, gwz -------------------------------------------------------------------------------------------------------------#
@@ -2577,12 +2666,17 @@ def matching_products_with_threshold(url_product, threshold, method):
     # if path_input != None and dict_product == None:
     # 16/04/2019 : ajout cas "all"
     # if path_input != None and method == "all_except_one":
-
     # 26/04/2019: ajout du paramètre "all_with_filter"
     # if (path_input != None and method == "all_except_one") or (path_input != None and method == "all"):
     # 06/05/2019: on n'utilise plus le paramètre "path_input"
     # if (path_input != None and method == "all_except_one") or (path_input != None and method == "all") or (path_input != None and method == "all_with_filter"):
-    if method == "all_except_one" or method == "all" or method == "all_with_filter":
+
+    # 20/05/2019 : le cas "all_except_one", ne sert plus à rien
+    # if method == "all_except_one" or method == "all" or method == "all_with_filter":
+
+    # 24/05/2019 : on n'a pas besoin de "all_with_filter" car on peut maintenant utiliser "all" à la place
+    # if method == "all" or method == "all_with_filter":
+    if method == "all":
 
     # 04/02/2019 : ajout de "str_result" suivant les titres égaux
         df_temp_bis = title_et_ngrams[['slug','distributeur','title_without_stopwords_new']]
@@ -2703,7 +2797,13 @@ def matching_products_with_threshold(url_product, threshold, method):
 
     # 06/05/2019: on n'utilise plus le paramètre "path_input"
     # if (path_input != None and method == "all_except_one") or (path_input != None and method == "all") or (path_input != None and method == "all_with_filter"):
-    if method == "all_except_one" or method == "all" or method == "all_with_filter":
+
+    # 20/05/2019 : le cas "all_except_one", ne sert plus à rien
+    # if method == "all_except_one" or method == "all" or method == "all_with_filter":
+
+    # 28/05/2019 : on n'a pas besoin de "all_with_filter" car on peut maintenant utiliser "all" à la place
+    # if method == "all" or method == "all_with_filter":
+    if method == "all":
 
         all_results_final = pd.concat([df_resultat_final, df_resultat_bis])
 
@@ -2728,48 +2828,61 @@ def matching_products_with_threshold(url_product, threshold, method):
         #*******************************************************************
 
     # if path_input != None and dict_product == None:
+    # 16/04/2019 : ajout cas "all"
 
     # 06/05/2019: on n'utilise plus le paramètre "path_input"
     # if path_input != None and method == "all_except_one":
-    if method == "all_except_one":
-        if threshold != None:
-            #output_file_name = 'all_results_BIO_SCRIPT_CONSOLE_with_exhaust_and_titles_equal_' + datetime.datetime.today().strftime("%d%m%y") + '_ALL_PRODUCTS_without_new_product_' + str(threshold) + '.xlsx'
-            output_file_name = 'all_results_BIO_with_exhaust_and_titles_equal_' + datetime.datetime.today().strftime("%Y%m%d") + '_' + method + '_' +  str(threshold) + '.xlsx'
-            # Sauvegarde en .pkl pour 3ème cas
-            # all_results_final.to_pickle(path_root + path_output + "/to_extract_all_except_one/all_except_one_results_final_" + method + '_' + str(threshold) + '.pkl')
-        else:
-            # output_file_name = 'all_results_BIO_SCRIPT__CONSOLE_with_exhaust_and_titles_equal_' + datetime.datetime.today().strftime("%d%m%y") + '_ALL_PRODUCTS_without_new_product.xlsx'
-            output_file_name = 'all_results_BIO_with_exhaust_and_titles_equal_' + datetime.datetime.today().strftime("%Y%m%d") + '_' +  method + '.xlsx'
-            # Sauvegarde en .pkl pour 3ème cas
-            # all_results_final.to_pickle(path_root + path_output + "/to_extract_all_except_one/all_except_one_results_final_" + method + '.pkl')
-        all_results_final.to_excel(path_root + path_output + '/' + output_file_name, index=False)
+
+    # 20/05/2019 : le cas "all_except_one", ne sert plus à rien
+    # if method == "all_except_one":
+    #     if threshold != None:
+    #         #output_file_name = 'all_results_BIO_SCRIPT_CONSOLE_with_exhaust_and_titles_equal_' + datetime.datetime.today().strftime("%d%m%y") + '_ALL_PRODUCTS_without_new_product_' + str(threshold) + '.xlsx'
+    #         # output_file_name = 'all_results_BIO_with_exhaust_and_titles_equal_' + datetime.datetime.today().strftime("%Y%m%d") + '_' + method + '_' +  str(threshold) + '.xlsx'
+    #         output_file_name = 'all_results_BIO_with_exhaust_and_titles_equal_' + datetime.datetime.today().strftime("%Y%m%d_%H%M%S") + '_' + method + '_' + str(threshold) + '.xlsx'
+    #         # Sauvegarde en .pkl pour 3ème cas
+    #         # all_results_final.to_pickle(path_root + path_output + "/to_extract_all_except_one/all_except_one_results_final_" + method + '_' + str(threshold) + '.pkl')
+    #     else:
+    #         # output_file_name = 'all_results_BIO_SCRIPT__CONSOLE_with_exhaust_and_titles_equal_' + datetime.datetime.today().strftime("%d%m%y") + '_ALL_PRODUCTS_without_new_product.xlsx'
+    #         # output_file_name = 'all_results_BIO_with_exhaust_and_titles_equal_' + datetime.datetime.today().strftime("%Y%m%d") + '_' +  method + '.xlsx'
+    #         output_file_name = 'all_results_BIO_with_exhaust_and_titles_equal_' + datetime.datetime.today().strftime("%Y%m%d_%H%M%S") + '_' + method + '.xlsx'
+    #         # Sauvegarde en .pkl pour 3ème cas
+    #         # all_results_final.to_pickle(path_root + path_output + "/to_extract_all_except_one/all_except_one_results_final_" + method + '.pkl')
+    #     all_results_final.to_excel(path_root + path_output + '/' + output_file_name, index=False)
 
     # elif path_input != None and dict_product != None:
     # 06/05/2019: on n'utilise plus le paramètre "path_input"
     # elif path_input != None and method == "new_one":
-    elif method == "new_one":
+
+    # 20/05/2019 : le cas "all_except_one", ne sert plus à rien
+    # elif method == "new_one":
+    if method == "new_one":
         if threshold != None:
             # output_file_name = 'all_results_BIO_SCRIPT_CONSOLE_with_exhaust_' + datetime.datetime.today().strftime("%d%m%y") + '_NEW_PRODUCT_' + str(threshold) + '.xlsx'
-            output_file_name = 'all_results_BIO_with_exhaust_' + datetime.datetime.today().strftime("%Y%m%d") + '_' +  method + '_' +  str(threshold) + '.xlsx'
+            # output_file_name = 'all_results_BIO_with_exhaust_' + datetime.datetime.today().strftime("%Y%m%d") + '_' +  method + '_' +  str(threshold) + '.xlsx'
+            output_file_name = 'all_results_BIO_with_exhaust_' + datetime.datetime.today().strftime("%Y%m%d_%H%M%S") + '_' + method + '_' + str(threshold) + '.xlsx'
             # Sauvegarde en .pkl pour 3ème cas
-            # df_resultat_final.to_pickle(path_root + path_output + "/to_extract_new_one/all_results_final_" + method + '_' + str(threshold) + '.pkl')
+            df_resultat_final.to_pickle(path_root + path_output + "/to_extract_new_one/all_results_final_" + method + '_' + str(threshold) + '.pkl')
         else:
             # output_file_name = 'all_results_BIO_SCRIPT_CONSOLE_with_exhaust_' + datetime.datetime.today().strftime("%d%m%y") + '_NEW_PRODUCT.xlsx'
-            output_file_name = 'all_results_BIO_with_exhaust_' + datetime.datetime.today().strftime("%Y%m%d") + '_' +  method + '.xlsx'
+            # output_file_name = 'all_results_BIO_with_exhaust_' + datetime.datetime.today().strftime("%Y%m%d") + '_' +  method + '.xlsx'
+            output_file_name = 'all_results_BIO_with_exhaust_' + datetime.datetime.today().strftime("%Y%m%d_%H%M%S") + '_' + method + '.xlsx'
             # Sauvegarde en .pkl pour 3ème cas
-            # df_resultat_final.to_pickle(path_root + path_output + "/to_extract_new_one/all_results_final_" + method + '.pkl')
-        df_resultat_final.to_pickle(path_root + path_output + "/to_extract_new_one/all_results_final_" + method + '.pkl')
+            df_resultat_final.to_pickle(path_root + path_output + "/to_extract_new_one/all_results_final_" + method + '.pkl')
         df_resultat_final.to_excel(path_root + path_output + '/' + output_file_name, index=False)
 
     # 15/04/2019: ajout du cas lancement pour "all"
     # 06/05/2019: on n'utilise plus le paramètre "path_input"
     # elif path_input != None and method == "all":
-    elif method == "all":
 
-        %dif threshold != None:
-            output_file_name = 'all_results_BIO_with_exhaust_and_titles_equal_' + datetime.datetime.today().strftime("%Y%m%d") + '_' +  method + '_' +  str(threshold) + '.xlsx'
+    # 28/05/2019 : on n'a pas besoin de "all_with_filter" car on peut maintenant utiliser "all" à la place
+    # elif method == "all":
+    else:
+        if threshold != None:
+            # output_file_name = 'all_results_BIO_with_exhaust_and_titles_equal_' + datetime.datetime.today().strftime("%Y%m%d") + '_' +  method + '_' +  str(threshold) + '.xlsx'
+            output_file_name = 'all_results_BIO_with_exhaust_and_titles_equal_' + datetime.datetime.today().strftime("%Y%m%d_%H%M%S") + '_' + method + '_' + str(threshold) + '.xlsx'
         else:
-            output_file_name = 'all_results_BIO_with_exhaust_and_titles_equal_' + datetime.datetime.today().strftime("%Y%m") + '_' + method + '.xlsx'
+            # output_file_name = 'all_results_BIO_with_exhaust_and_titles_equal_' + datetime.datetime.today().strftime("%Y%m%d") + '_' + method + '.xlsx'
+            output_file_name = 'all_results_BIO_with_exhaust_and_titles_equal_' + datetime.datetime.today().strftime("%Y%m%d_%H%M%S") + '_' + method + '.xlsx'
 
         # Sauvegarde en .pkl pour le 4ème cas
         all_results_final.to_pickle(path_root + path_output + "/to_extract_all/all_results_final_" + method + '.pkl')
@@ -2778,13 +2891,17 @@ def matching_products_with_threshold(url_product, threshold, method):
     # 26/04/2019: ajout du paramètre "all_with_filter"
     # 06/05/2019: on n'utilise plus le paramètre "path_input"
     # elif path_input != None and method == "all_with_filter":
-    elif method == "all_with_filter":
 
-        output_file_name = 'all_results_BIO_with_exhaust_and_titles_equal_' + datetime.datetime.today().strftime("%Y%m%d") + '_' + method + '.xlsx'
+    # 28/05/2019 : on n'a pas besoin de "all_with_filter" car on peut maintenant utiliser "all" à la place
+    # On met en commentaires ci-dessous :
+    # elif method == "all_with_filter":
+
+        # output_file_name = 'all_results_BIO_with_exhaust_and_titles_equal_' + datetime.datetime.today().strftime("%Y%m%d") + '_' + method + '.xlsx'
+        # output_file_name = 'all_results_BIO_with_exhaust_and_titles_equal_' + datetime.datetime.today().strftime("%Y%m%d_%H%M%S") + '_' + method + '.xlsx'
 
         # Sauvegarde en .pkl
-        all_results_final.to_pickle(path_root + path_output + "/to_extract_all/all_results_final_" + method + '.pkl')
-        all_results_final.to_excel(path_root + path_output + '/' + output_file_name, index=False)
+        # all_results_final.to_pickle(path_root + path_output + "/to_extract_all/all_results_final_" + method + '.pkl')
+        # all_results_final.to_excel(path_root + path_output + '/' + output_file_name, index=False)
 
 # if __name__== "__main__":
 #     # main(path_input_files, dict_one_product, 0.75)

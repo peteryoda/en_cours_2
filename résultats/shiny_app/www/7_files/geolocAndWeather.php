@@ -1,0 +1,1 @@
+DCInfosCallback({"country":"FR","region":"A8","city":"Gentilly","latitude":48.8129,"longitude":2.3417,"postal_code":"94250","browser":"Google Chrome","ip":"82.227.151.58","traffic":null})

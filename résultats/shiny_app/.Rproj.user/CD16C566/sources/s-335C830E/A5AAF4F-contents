@@ -1,0 +1,17 @@
+library(shiny)
+
+shinyUI(fluidPage(
+  titlePanel("Uploading Files"),
+  mainPanel(
+    htmlOutput("inc")
+  )
+))
+
+#  ----- server.R -----
+
+shinyServer(function(input, output) {
+  getPage<-function() {
+    return(includeHTML("include.html"))
+  }
+  output$inc<-renderUI({getPage()})
+})

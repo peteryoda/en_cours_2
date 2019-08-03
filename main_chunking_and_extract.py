@@ -63,7 +63,11 @@ if __name__== "__main__":
 
     # 26/04/2019: ajout du paramètre "all_with_filter"
     # parser.add_argument("-m", "--method_chosen", help="lancer pour tous les produits excepté un ou seulement pour le nouveau produit", choices=["all_except_one", "new_one","all"], default="all")
-    parser.add_argument("-m", "--method_chosen", help="lancer pour tous les produits excepté un ou seulement pour le nouveau produit", choices=["all_except_one", "new_one", "all","all_with_filter"], default="all")
+
+
+    # 29/05/2019: les valeurs possibles sont simplement "all" et "new_one"
+    # parser.add_argument("-m", "--method_chosen", help="lancer pour tous les produits excepté un ou seulement pour le nouveau produit", choices=["all_except_one", "new_one", "all","all_with_filter"], default="all")
+    parser.add_argument("-m", "--method_chosen",help="lancer pour tous les produits excepté un ou seulement pour le nouveau produit", choices=["all", "new_one"], default="all")
 
     # 25/04/2019: ajout du 5ème paramètre "to_filter" par défaut à False
     # version plus simple car on n'a pas besoin pour l'instant de filtrer suivant une URL et un seuil
@@ -74,22 +78,38 @@ if __name__== "__main__":
     print ("ETAPE 1 : chunking en cours \n")
 
     # 26/04/2019 : on empeche le lancement du matching avec "all" en filtrant avec une URL
+
+    # 29/05/2019: on peut utiliser "all" et filtrer suivant une URL
     if args.method_chosen == "all" and args.url_one_product != None:
-        print('La méthode "all" doit etre lancée avec une URL non renseignée')
-        print('Arret du script')
-        exit()
-    if args.method_chosen == "all_with_filter" and args.url_one_product != None:
-        print('La méthode "all_with_filter" va etre lancée avec url_one_product = ',args.url_one_product)
+        # print('La méthode "all" doit etre lancée avec une URL non renseignée')
+        # print('Arret du script')
+        # exit()
+        print('La méthode "all" va etre lancée avec url_one_product = ', args.url_one_product)
         print("ATTENTION: le filtre utilisant cette URL sera utilisé seulement pour l'ETAPE 2 de création du .json \n")
 
-    chunking.matching_products_with_threshold(args.path_input_files, args.url_one_product, args.threshold_value,args.method_chosen)
+    # 29/05/2019: les valeurs possibles sont simplement "all" et "new_one" et "all_with_filter" n'existe plus
+    # On met en commentaires ci-dessous:
+    # if args.method_chosen == "all_with_filter" and args.url_one_product != None:
+    #     print('La méthode "all_with_filter" va etre lancée avec url_one_product = ',args.url_one_product)
+    #     print("ATTENTION: le filtre utilisant cette URL sera utilisé seulement pour l'ETAPE 2 de création du .json \n")
 
-    if args.method_chosen == "all_except_one":
-        print('\n Pas de création des .json dans le cas "all_except_one" \n')
+    # 16/05/2019 : plus besoin de ce paramètre "path_input_files" pour un vrai fonctionnement en PROD
+    # chunking.matching_products_with_threshold(args.path_input_files, args.url_one_product, args.threshold_value,args.method_chosen)
+    chunking.matching_products_with_threshold(args.url_one_product, args.threshold_value,args.method_chosen)
+
+    # 20/05/2019 : le cas "all_except_one", ne sert plus à rien
+    # if args.method_chosen == "all_except_one":
+    #     print('\n Pas de création des .json dans le cas "all_except_one" \n')
 
     # 26/04/2019: ajout du paramètre "all_with_filter"
     # elif  args.method_chosen == "new_one" or args.method_chosen == "all":
-    elif args.method_chosen == "new_one" or args.method_chosen == "all" or args.method_chosen == "all_with_filter":
+
+    # 20/05/2019 : le cas "all_except_one", ne sert plus à rien
+    # elif args.method_chosen == "new_one" or args.method_chosen == "all" or args.method_chosen == "all_with_filter":
+
+    # 29/05/2019 : on n'utilise plus "all_with_filter"
+    # if args.method_chosen == "new_one" or args.method_chosen == "all" or args.method_chosen == "all_with_filter":
+    if args.method_chosen == "new_one" or args.method_chosen == "all":
         print("\n ETAPE 2 : création des .json \n")
         # extract_to_json.extract_matched_products(args.path_input_files, args.url_one_product, args.threshold_value, args.method_chosen)
 
