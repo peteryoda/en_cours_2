@@ -1,7 +1,7 @@
  * * * README * * * 
 
 LANCER L'APPLICATION:
-Ouvrir ui.R ou server.R et cliquer sur RunApp (petit triangle vert en haut à droite).
+Ouvrir ui.R ou server.R et cliquer sur RunApp (petit triangle vert en haut à droite)
 
 UTILISATION:
 Onglet COMPARAISON comporte deux boxes, qui correspondent à une paire du dataframe.
