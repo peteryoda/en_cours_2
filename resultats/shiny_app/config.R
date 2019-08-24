@@ -29,7 +29,7 @@ if ("saved.rds" %in% list.files()){
   df = df[filter,]
   }
 
-# Stats sur le nombre de matchs par starte
+# Stats sur le nombre de matchs par strate
 statsbystrate = df %>%
   group_by(strate_var_score,decision) %>%
   summarise(f = n()) %>%

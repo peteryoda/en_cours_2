@@ -18,7 +18,7 @@ shinyServer(function(input, output, session) {
     solution
   })
   
-  # Affiche le socre d'un couple en haut à gauche
+  # Affiche le score d'un couple en haut à gauche
   # Pour accéder à la bibliothèque des couleurs disponibles :
   # https://rstudio.github.io/shinydashboard/appearance.html
   # Pour accéder à la bibliothèque des logos

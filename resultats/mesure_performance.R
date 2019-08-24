@@ -1,5 +1,6 @@
 # install.packages("readxl")
-# library(readxl)
+library(readxl)
+library(ggplot2)
 
 # Jointure saved.rds et le fichier Excel des 100 couples
 saved = readRDS("resultats/shiny_app/saved.rds")
@@ -51,7 +52,7 @@ mydf = mydf[order(mydf$strate,decreasing=FALSE),]
 
 df_temp = mydf[mydf$decision == "match",]
 # Correction / interpolation de strate = 9
-df_temp$f[df_temp$strate == 9] = 0.8815
+# df_temp$f[df_temp$strate == 9] = 0.8815
 
 # y = mydf$f[mydf$decision == "match"]
 # y = df_temp$f
@@ -68,7 +69,7 @@ rownames(mydfroc) = NULL
 
 # Correction / interpolation de strate = 9
 # mydfroc$f[mydfroc$strate == 9] = 0.945
-# mydfroc$f[mydfroc$strate == 9] = 0.8815
+mydfroc$f[mydfroc$strate == 9] = 0.8815
 
 mydfroc$nb_match = mydfroc$f * 10
 total_match = sum(mydfroc$nb_match)
@@ -80,7 +81,7 @@ mydfroc$score = mydfroc$cum_nb_match / total_match
 #plot(mydfroc$score,type="l",ylim = c(0,1))
 mydfroc$strate = 11 - mydfroc$strate
 mydfroc = rbind(c(0,0,0,0,0,0),mydfroc)
-ggplot(mydfroc, aes(strate, score)) + geom_line() + ylim(c(0,1))
+# ggplot(mydfroc, aes(strate, score)) + geom_line() + ylim(c(0,1))
 
 mydfroc$decision[mydfroc$strate == 0] = "match"
 
@@ -102,7 +103,7 @@ names(mydfroc)[names(mydfroc) == "score"] = "recall"
 ggplot(mydfroc, aes(strate, recall, color = model)) + geom_line() + ylim(c(0,1)) + ggtitle("ROC curve")
 
 lapply(mydfroc, class)
-auc = sum(mydfroc$score) / 10
+auc = (sum(mydfroc$recall) - 1) / 10
 auc
 # 0.65800
 # On a : 0.653968

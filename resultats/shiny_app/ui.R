@@ -121,15 +121,15 @@ ui <- dashboardPage(
           )
         ),
         fluidRow(
-          box(
-            collapsible = TRUE,
-            collapsed = FALSE,
-            solidHeader = TRUE,
-            status = "primary",
-            title="Carte des geoclusters de l'id",
-            width=6,
-            verbatimTextOutput("info")
-          )
+          # box(
+          #   collapsible = TRUE,
+          #   collapsed = FALSE,
+          #   solidHeader = TRUE,
+          #   status = "primary",
+          #   title="Carte des geoclusters de l'id",
+          #   width=6,
+          #   verbatimTextOutput("info")
+          # )
         ),
         fluidRow(
         ),
