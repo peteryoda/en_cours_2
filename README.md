@@ -1,4 +1,4 @@
-Le but de ce projet est de montrer les résultats que j'ai obtenus au sujet du matching de produits E-commerce.
+Le but de ce projet est de présenter la méthodologie que j'ai utilisée pour une problématique de matching de produits E-commerce.
 
 # Méthode de matching:
 
@@ -22,9 +22,9 @@ Cette application Shiny est accessible ici:
 Ci-dessous, les résultats obtenus:
 
 - courbe des % de biens classés pour chaque décile:
-<img src = "img/Rplot_model_performance.png" width = 500>
+<img src = "resultats/img/Rplot_model_performance.png" width = 500>
 - courbe de ROC:
-<img src = "img/Rplot_ROC_curve.png" width = 500>
+<img src = "resultats/img/Rplot_ROC_curve.png" width = 500>
 
 # Perspectives:
 
