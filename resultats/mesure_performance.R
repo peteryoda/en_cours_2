@@ -52,7 +52,7 @@ mydf = mydf[order(mydf$strate,decreasing=FALSE),]
 
 df_temp = mydf[mydf$decision == "match",]
 # Correction / interpolation de strate = 9
-# df_temp$f[df_temp$strate == 9] = 0.8815
+df_temp$f[df_temp$strate == 9] = 0.8815
 
 # y = mydf$f[mydf$decision == "match"]
 # y = df_temp$f
