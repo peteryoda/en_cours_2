@@ -1,4 +1,5 @@
-Le but de ce projet est de présenter la méthodologie que j'ai utilisée pour une problématique de matching de produits E-commerce.
+Le but de ce projet est de présenter la méthodologie que j'ai utilisée pour une problématique de matching de produits E-commerce
+ainsi que mes résultats.
 
 # Méthode de matching:
 
