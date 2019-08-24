@@ -27,10 +27,7 @@ ui <- dashboardPage(
       menuItem("DATAFRAME", tabName = "ONGLET_offset", icon = icon("plane")),
       # menuItem("HABITS", tabName = "ONGLET_habits", icon = icon("plane")),
       # menuItem("RECHERCHE", tabName = "ONGLET_recherche", icon = icon("plane")),
-      # 
-      
-
-      
+    
       selectInput(
         inputId = "selected_id",
         label = "Selectionnez une paire", 
@@ -96,6 +93,13 @@ ui <- dashboardPage(
         
         
         # ROW 1 - Onglet draft
+        # Nouvelle Fluidrow pour afficher
+        fluidRow(
+            valueBoxOutput("score",width=6),
+            valueBoxOutput("truth",width=6)
+        ),
+        
+        
         fluidRow(
           box(
             collapsible = TRUE,
