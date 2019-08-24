@@ -45,7 +45,7 @@ ui <- dashboardPage(
       
       radioButtons(inputId="decision",
                    label="Faites votre choix",
-                   choices = c("match","doubt","unmatch"),
+                   choices = c("match","doubt","unmatch","cont diff"),
                    selected = NULL,
                    inline = FALSE,
                    width = NULL,
@@ -117,15 +117,15 @@ ui <- dashboardPage(
           )
         ),
         fluidRow(
-          # box(
-          #   collapsible = TRUE,
-          #   collapsed = FALSE,
-          #   solidHeader = TRUE,
-          #   status = "primary",
-          #   title="Carte des geoclusters de l'id",
-          #   width=6,
-          #   verbatimTextOutput("info")
-          # ),
+          box(
+            collapsible = TRUE,
+            collapsed = FALSE,
+            solidHeader = TRUE,
+            status = "primary",
+            title="Carte des geoclusters de l'id",
+            width=6,
+            verbatimTextOutput("info")
+          )
         ),
         fluidRow(
         ),

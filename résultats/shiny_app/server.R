@@ -38,9 +38,11 @@ shinyServer(function(input, output, session) {
 output$matable <-renderTable({
   values$df_data
 })
-  
+    
   output$info <- renderPrint({
-    geturls()
+    # geturls()
+    table(values$df_data$decision)
+    #3+4
   })
   
   
