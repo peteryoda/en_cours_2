@@ -23,7 +23,7 @@ Cette application Shiny est accessible ici: https://vince7th.shinyapps.io/shiny_
 
 Ci-dessous, les résultats obtenus:
 
-- courbe des % de biens classés pour chaque décile:
+- courbe des % de match bien prédits pour chaque décile:
 <img src = "resultats/img/Rplot_model_performance.png" width = 500>
 - courbe de ROC:
 <img src = "resultats/img/Rplot_ROC_curve.png" width = 500>
