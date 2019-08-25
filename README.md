@@ -19,7 +19,7 @@ Ce qui a donné au final, près de 2900 couples accompagnés d'un score de confi
 # Résultats
 
 Une application Shiny a permis de labelliser 100 couples tirés au hasard dans les déciles des scores de confiance.
-Cette application Shiny est accessible ici:
+Cette application Shiny est accessible ici: https://vince7th.shinyapps.io/shiny_app/
 
 Ci-dessous, les résultats obtenus:
 
