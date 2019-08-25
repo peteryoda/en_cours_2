@@ -18,6 +18,8 @@ shinyServer(function(input, output, session) {
     solution
   })
   
+  
+  
   # Affiche le score d'un couple en haut à gauche
   # Pour accéder à la bibliothèque des couleurs disponibles :
   # https://rstudio.github.io/shinydashboard/appearance.html
@@ -27,8 +29,12 @@ shinyServer(function(input, output, session) {
     vals <- value_box_data()
     score = round(vals["confidence_score"],2)
     strate = vals$strate
+    
+    nmatchbystrate = statsbystrate$f[statsbystrate$strate_var_score==vals$strate_var_score]
+    
     toprint1 = paste0("Model Score : ",score)
-    toprint2 = paste0("Décile n° ",strate)
+    # toprint2 = paste0("Décile n° ",strate)
+    toprint2 = paste0("Décile n° ",strate, ": il y a ",nmatchbystrate," match dans ce décile")
     valueBox(
       value = toprint1,
       subtitle = toprint2,
@@ -47,13 +53,13 @@ shinyServer(function(input, output, session) {
         col = "red"
       }
     
-    nmatchbystrate = statsbystrate$f[statsbystrate$strate_var_score==vals$strate_var_score]
+    # nmatchbystrate = statsbystrate$f[statsbystrate$strate_var_score==vals$strate_var_score]
     
     toprint1 = paste0("Réalité : ",truth)
-    toprint2 = paste0("Il y a ",nmatchbystrate," match dans ce décile")
+    # toprint2 = paste0("Il y a ",nmatchbystrate," match dans ce décile")
     valueBox(
       value = toprint1,
-      subtitle = toprint2,
+      subtitle = "",
       color = col,
       icon = icon("asterisk",lib="glyphicon")
     )
