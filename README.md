@@ -41,12 +41,13 @@ Ci-dessous, les résultats obtenus:
 
 - courbe des % de match bien prédits pour chaque décile:
 <img src = "resultats/img/Rplot_model_performance.png" width = 500>
-- courbe de ROC:
-<img src = "resultats/img/Rplot_ROC_curve.png" width = 500>
 
 On voit qu'au dessus d'une similarité de 0.70, on a presque 80% de chances que les produits soient identiques.
 On pourrait donc en pratique filtrer seulement les couples de produits ayant une similarité >= 0.70
-afin de trouver une très bonne proportion de produits identiques?
+afin de trouver une très bonne proportion de produits identiques
+
+- courbe de ROC:
+<img src = "resultats/img/Rplot_ROC_curve.png" width = 500>
 
 # Perspectives
 
