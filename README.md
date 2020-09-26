@@ -17,18 +17,18 @@ qui partagent dans leurs titres ces entités / attributs.
 Ce qui a donné au final, près de 2900 couples accompagnés d'un score de confiance ou score de similarité. 
 
 # NB) le programme "chunking_bio.py" permet de :
-1. Pour chaque produit, extraction des entités contenus dans les titres
+1. Pour chaque produit, extraire des entités contenus dans les titres
 
-2. Extraction des entités partagées dans les titres de deux produits provenant de distributeurs différents et de même marque 
+2. Extraire des entités partagées dans les titres de deux produits provenant de distributeurs différents et de même marque :
      - une seule entité
-	 - une combinaison de deux entités
-	 - une combinaison de trois entités
-	 - une combinaison de quatre entités
-	 - une combinaison de cinq entités
+     - une combinaison de deux entités
+     - une combinaison de trois entités
+     - une combinaison de quatre entités
+     - une combinaison de cinq entités
 	
 3. Couples de produits partageant des entités
 	 
-4. Calcul du score de similarité pour les tous les couples trouvés
+4. Calcul du score de similarité pour tous les couples trouvés
 
 5. 2900 couples en sortie qui partagent au moins une entité
 
