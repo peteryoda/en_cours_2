@@ -30,7 +30,7 @@ Ci-dessous, les résultats obtenus:
 
 # Perspectives
 
-Ce modèle obtenu grâce à la méthode du Chunking constitue une baseline. En effet, il assez bon du point de vue de la métrique Precision,
+Ce modèle obtenu grâce à la méthode du Chunking constitue une baseline. En effet, il est assez bon du point de vue de la métrique Precision,
 mais beaucoup moins bon du point de vue du Recall. Aussi afin d'avoir un Recall de meilleure qualité, on pourrait envisager
 de créer un modèle de Machine Learning supervisé avec :
 - la labellisation des 2900 couples avec "match" vs "unmatch"
