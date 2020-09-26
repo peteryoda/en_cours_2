@@ -16,7 +16,7 @@ Les découpages de tous les titres des produits ont donné en sortie des couples
 qui partagent dans leurs titres ces entités / attributs.
 Ce qui a donné au final, près de 2900 couples accompagnés d'un score de confiance ou score de similarité. 
 
-# RAPPEL: le programme "chunking_bio.py" permet de :
+# NB) le programme "chunking_bio.py" permet de :
 1. Pour chaque produit, extraction des entités contenus dans les titres
 
 2. Extraction des entités partagées dans les titres de deux produits provenant de distributeurs différents et de même marque 
