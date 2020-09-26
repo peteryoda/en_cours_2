@@ -6,7 +6,7 @@ ainsi que les résultats.
 Les titres et les descriptions ont été utilisés en entrée d'un algorithme 
 qui se base sur le principe NLP du chunking.
 
-Grâce au package Pattern,  des entités de type Noun Phrases, Adjective Phrases, Prepositional Phrases et Verb Phrases
+Grâce au package Pattern,  des entités de type groupes nominaux, locutions adjectivales, locutions prépositionnelles et locutions verbales
 ont été extraites à partir des descriptions des produits.
 Puis parmi les N-grams présents dans les titres des produits, seuls ont été sélectionnés 
 ceux qui font partie des entités obtenues grâce au chunking.
