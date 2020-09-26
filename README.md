@@ -44,6 +44,9 @@ Ci-dessous, les résultats obtenus:
 - courbe de ROC:
 <img src = "resultats/img/Rplot_ROC_curve.png" width = 500>
 
+On voit qu'au dessus d'une similarité de 0.70, on a plutôt de grandes chances que parmi les couples obtenus en sortie de l'application
+les produits soient identiques
+
 # Perspectives
 
 Ce modèle obtenu grâce à la méthode du Chunking constitue une baseline. En effet, il est assez bon du point de vue de la métrique Precision,
